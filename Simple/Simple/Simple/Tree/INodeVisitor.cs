@@ -8,6 +8,6 @@ namespace Simple.Tree
 {
     interface INodeVisitor<T>
     {
-        void Accept(BinaryTreeNode<T> node);
+        void Accept(T node);
     }
 }

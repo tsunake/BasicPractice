@@ -9,9 +9,9 @@ namespace Simple
 {
     class PrintNodeValue<T> : INodeVisitor<T>
     {
-        public void Accept(BinaryTreeNode<T> node)
+        public void Accept(T value)
         {
-            Logger.Error(node.Value.ToString());
+            Logger.Error(value.ToString());
         }
     }
 

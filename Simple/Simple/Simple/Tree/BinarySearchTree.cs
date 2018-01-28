@@ -89,7 +89,7 @@ namespace Simple.Tree
                     current = current.Left;
                 }
                 current = sequence.Pop();
-                visitor.Accept(current);
+                visitor.Accept(current.Value);
                 current = current.Right;
             }
         }
@@ -109,7 +109,7 @@ namespace Simple.Tree
             while (sequence.Count > 0)
             {
                 current = sequence.Pop();
-                visitor.Accept(current);
+                visitor.Accept(current.Value);
                 if (current.Right != null)
                     sequence.Push(current.Right);
                 if (current.Left != null)
@@ -138,7 +138,7 @@ namespace Simple.Tree
                 if (left_child_visited && right_child_visited)
                 {
                     sequence.Pop();
-                    visitor.Accept(current);
+                    visitor.Accept(current.Value);
                     record.Add(current);
                 }
                 if (!right_child_visited)
@@ -191,7 +191,7 @@ namespace Simple.Tree
             if (node == null)
                 return;
             InorderTraverse(visitor, node.Left);
-            visitor.Accept(node);
+            visitor.Accept(node.Value);
             InorderTraverse(visitor, node.Right);
         }
 
@@ -199,7 +199,7 @@ namespace Simple.Tree
         {
             if (node == null)
                 return;
-            visitor.Accept(node);
+            visitor.Accept(node.Value);
             PreorderTraverse(visitor, node.Left);
             PreorderTraverse(visitor, node.Right);
         }
@@ -210,7 +210,7 @@ namespace Simple.Tree
                 return;
             PostorderTraverse(visitor, node.Left);
             PostorderTraverse(visitor, node.Right);
-            visitor.Accept(node);
+            visitor.Accept(node.Value);
         }
         #endregion
     }
