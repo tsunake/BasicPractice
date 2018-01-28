@@ -36,9 +36,7 @@ namespace Simple
             tree.Insert(8);
             tree.Remove(2);
             tree.Remove(6);
-            tree.PostorderRecursiveTraverse(visitor);
-            Logger.Error("split");
-            tree.PostorderTraverse(visitor);
+            tree.LayerTraverse(visitor);
         }
     }
 }

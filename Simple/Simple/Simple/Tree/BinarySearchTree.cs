@@ -148,6 +148,24 @@ namespace Simple.Tree
             }
         }
 
+        public void LayerTraverse(INodeVisitor<T> visitor)
+        {
+            if (m_root == null)
+                return;
+            Queue<BinaryTreeNode<T>> sequence = new Queue<BinaryTreeNode<T>>();
+            sequence.Enqueue(m_root);
+            BinaryTreeNode<T> current = null;
+            while(sequence.Count > 0)
+            {
+                current = sequence.Dequeue();
+                visitor.Accept(current.Value);
+                if (current.Left != null)
+                    sequence.Enqueue(current.Left);
+                if (current.Right != null)
+                    sequence.Enqueue(current.Right);
+            }
+        }
+
         #region internal
         private void Remove(T item, ref BinaryTreeNode<T> node)
         {
