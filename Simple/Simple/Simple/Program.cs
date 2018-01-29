@@ -24,19 +24,7 @@ namespace Simple
 
         private static void TestBST()
         {
-            BinarySearchTree<int> tree = new BinarySearchTree<int>();
-            PrintNodeValue<int> visitor = new PrintNodeValue<int>();
-            tree.Insert(6);
-            tree.Insert(2);
-            tree.Insert(1);
-            tree.Insert(5);
-            tree.Insert(3);
-            tree.Insert(4);
-            tree.Insert(2);
-            tree.Insert(8);
-            tree.Remove(2);
-            tree.Remove(6);
-            tree.LayerTraverse(visitor);
+            Logger.Error(MathHelper.NextPrime(299).ToString());
         }
     }
 }
