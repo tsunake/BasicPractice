@@ -8,10 +8,52 @@ namespace Simple
 {
     public class MathHelper
     {
+    
+        //http://blog.csdn.net/arvonzhang/article/details/8564836
+
+        //1.费马小定理：N^P-N≡0(mod P)，P为素数，N不能被P整除,≡同余表示等式两边mod p的余数相等,或者写作N^P≡N(mod P)
+        //N*（N^(P-1) - 1） %  P = 0，说明N*（N^(P-1) - 1）可以被P整除，显然也可以被N整除
+        //公倍数：两个不同的自然数A和B，若有自然数C可以被A整除也可以被B整除，那么C就是A和B的公倍数。
+        //则存在整数M满足N*（N^(P-1) - 1） = M * N * P 
+        //则N^(P-1) - 1 = M * P，说明N^(P-1) - 1是P的倍数
+        //即(N^(P-1) - 1) % P = 0,即N^(P-1) % P = 1，这个可以结合下面的Montgomery来判断是否是“素数”
+        //存在伪素数满足费马小定理，伪素数其实是合数，伪素数有无穷多个
+
+        //2.积模分解公式：如果有：X%Z=0，即X能被Z整除，则有：(X+Y)%Z=Y%Z
+        //设有X、Y和Z三个正整数，则必有：(X*Y)%Z=((X%Z)*(Y%Z))%Z
+
+        //http://blog.csdn.net/jiange_zh/article/details/50684528
+        //快速幂算法
+        public static uint Power(uint n, uint power)
+        {
+            uint result = 1;
+            while(power > 0)
+            {
+                if ((power & 1) != 0)
+                    result *= n;
+                n *= n;
+                power >>= 1;
+            }
+            return result;
+        }
+
+        //http://blog.csdn.net/ltyqljhwcm/article/details/53043646
+        //计算n ^ power % divisor,蒙哥马利快速幂模算法
+        public static uint Montgomery(uint n, uint power, uint divisor)
+        {
+            n = n % divisor;
+            uint result = 1;
+            while(power > 0)
+            {
+                if((power & 1) != 0)
+                    result = (result * n) % divisor;
+                n = (n * n) % divisor;
+                power >>= 1;
+            }
+            return result;
+        }
+
         //https://opensource.apple.com/source/libcpp/libcpp-31/src/hash.cpp?txt   
-        //积模分解公式 （(A%C)*(B%C)）%C=(A*B)%C  
-        //对于指定的数Value，如果事先建立一张足够大的素数表PrimeSet, 
-        //对于PrimeSet每个数N都有 N * (Value - 1) % Value == 1,则可以粗略的认为Value是素数，否则不是 
         //handle all next_prime(i) for i in [1, 210), special case 0 
         static uint[] small_primes ={
                               0,   2,   3,   5,   7,   11,  13,  17,  19,  23,
@@ -31,13 +73,13 @@ namespace Simple
                         179, 181, 187, 191, 193, 197, 199, 209
                         };
 
-        //return the index
-        private static int LowerBound(uint[] array, uint threshold)
+        //不小于threshold的数的index，内部函数，array升序排列，threshold小于等于array里面最大的数
+        private static int LowerBoundIndex(uint[] array, uint threshold)
         {
-            return LowerBound(array, 0, array.Length - 1, threshold);
+            return LowerBoundIndex(array, 0, array.Length - 1, threshold);
         }
 
-        private static int LowerBound(uint[] array, int begin, int end, uint threshold)
+        private static int LowerBoundIndex(uint[] array, int begin, int end, uint threshold)
         {
             int length = end - begin + 1;
             if (length < 3)
@@ -48,24 +90,25 @@ namespace Simple
             }
             int half = begin + length / 2;
             if (array[half] >= threshold)
-                return LowerBound(array, begin, half, threshold);
-            return LowerBound(array, half, end, threshold);
+                return LowerBoundIndex(array, begin, half, threshold);
+            return LowerBoundIndex(array, half, end, threshold);
         }
 
+        //返回最接近n的素数(不小于n)
         public static uint NextPrime(uint n)
         {
             uint L = 210;
             int N = small_primes.Length;
             // If n is small enough, search in small_primes
             if (n <= small_primes[N - 1])
-                return small_primes[LowerBound(small_primes, n)];
+                return small_primes[LowerBoundIndex(small_primes, n)];
             // Else n > largest small_primes
             // Start searching list of potential primes: L * k0 + indices[in]
             int M = indices.Length; ;
             // Select first potential prime >= n
             //   Known a-priori n >= L
             uint k0 = n / L;
-            int index = LowerBound(indices, n - k0 * L);
+            int index = LowerBoundIndex(indices, n - k0 * L);
             n = L * k0 + indices[index];
             while (true)
             {
