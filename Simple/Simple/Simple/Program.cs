@@ -27,7 +27,6 @@ namespace Simple
             hash_table.Insert(1);
             hash_table.Remove(101);
             hash_table.Remove(1);
-            hash_table.Print();
         }
     }
 }
