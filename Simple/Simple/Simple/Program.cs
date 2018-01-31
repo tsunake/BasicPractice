@@ -19,12 +19,15 @@ namespace Simple
     {
         static void Main(string[] args)
         {
-            TestBST();
-        }
-
-        private static void TestBST()
-        {
-            Logger.Error(MathHelper.NextPrime(299).ToString());
+            //Logger.Error(MathHelper.NextPrime(299).ToString());
+            Simple.Hash.HashTable<int> hash_table = new Hash.HashTable<int>();
+            for (int i = 0; i < 58; ++i)
+                hash_table.Insert(i);
+            hash_table.Contains(1);
+            hash_table.Insert(1);
+            hash_table.Remove(101);
+            hash_table.Remove(1);
+            hash_table.Print();
         }
     }
 }
