@@ -11,6 +11,7 @@ namespace Simple
     {
         public void Accept(T value)
         {
+
             Logger.Error(value.ToString());
         }
     }
