@@ -44,6 +44,8 @@
     <Compile Include="Common\IRecyclable.cs" />
     <Compile Include="Common\Logger.cs" />
     <Compile Include="Common\ObjectPool.cs" />
+    <Compile Include="CRC\CRC.cs" />
+    <Compile Include="CRC\CRC32.cs" />
     <Compile Include="Hash\HashTable.cs" />
     <Compile Include="Helper\MathHelper.cs" />
     <Compile Include="Program.cs" />
