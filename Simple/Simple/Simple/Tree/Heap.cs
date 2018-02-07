@@ -55,8 +55,9 @@ namespace Simple.Tree
 
         public void Remove(T item)
         {
-            //TODO:
-            //相当于无限减小（增大）目标节点的优先级，然后Pop
+            //如果限制T为引用类型，可以进行remove
+            //值类型的remove，视情况进行
+            //TODO:把最后一个数拿来填充移除的位置，堆尺寸减1，视情况进行PercolateDown或者PercolateUp
         }
 
         public T Peek()
