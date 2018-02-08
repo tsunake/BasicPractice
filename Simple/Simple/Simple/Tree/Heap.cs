@@ -63,7 +63,7 @@ namespace Simple.Tree
         public T Peek()
         {
             if (m_elements.Count <= 0)
-                throw new InvalidOperationException("No Element in Heap");
+                throw new Exception("No Element in Heap");
             return m_elements[0];
         }
 
@@ -75,7 +75,7 @@ namespace Simple.Tree
         {
             int last_loc = m_elements.Count - 1;
             if (last_loc < 0)
-                throw new InvalidOperationException("No Element in Heap");
+                throw new Exception("No Element in Heap");
             T result = m_elements[0];
             m_elements[0] = m_elements[last_loc];
             m_elements.RemoveAt(last_loc);
