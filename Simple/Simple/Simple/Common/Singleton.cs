@@ -23,7 +23,6 @@ namespace Simple.Common
             {
                 if (ms_instance == null)
                 {
-                    //感谢yqq指点
                     ConstructorInfo[] ctors = typeof(T).GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic);
                     ConstructorInfo ctor = Array.Find(ctors, c => c.GetParameters().Length == 0);
                     if (ctor == null)

@@ -103,6 +103,8 @@ namespace Simple.Tree
         //指定位置处的元素下沉
         private void PercolateDown(int loc)
         {
+            if (loc >= m_elements.Count)
+                return;
             T value = m_elements[loc];
             int parent = loc;
             int target_child = 2 * parent + 1;
@@ -127,7 +129,7 @@ namespace Simple.Tree
             T value = m_elements[loc];
             int child = loc;
             int parent = (child - 1) / 2;
-            while(parent >= 0)
+            while(parent >= 0 && child != parent)
             {
                 if (AgainstSortType(value, m_elements[parent]))
                     m_elements[child] = m_elements[parent];
