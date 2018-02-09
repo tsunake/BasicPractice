@@ -45,6 +45,7 @@
     <Compile Include="Common\Logger.cs" />
     <Compile Include="Common\ObjectPool.cs" />
     <Compile Include="Common\Singleton.cs" />
+    <Compile Include="Common\Sort.cs" />
     <Compile Include="CRC\CRC.cs" />
     <Compile Include="CRC\CRC32.cs" />
     <Compile Include="Hash\HashTable.cs" />
