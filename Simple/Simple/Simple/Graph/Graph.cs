@@ -91,17 +91,20 @@ namespace Simple
     {
         public WeightedVertex(int index)
         {
-
+            m_index = index;
         }
 
         public int m_index = -1;
         public Dictionary<WeightedVertex, int> m_neighbours = new Dictionary<WeightedVertex, int>();
+        public WeightedVertex m_path = null;
+        public float m_dist = -1;
+        public bool m_known = false;
     }
 
     public class WeightedGraph
     {
         private List<WeightedVertex> m_vertices = new List<WeightedVertex>();
-        public void InitGraph()
+        public void test()
         {
             WeightedVertex v1 = new WeightedVertex(1);
             WeightedVertex v2 = new WeightedVertex(2);
@@ -123,6 +126,7 @@ namespace Simple
             v4.m_neighbours.Add(v5, 2);
             v4.m_neighbours.Add(v6, 8);
             v4.m_neighbours.Add(v7, 4);
+            v4.m_neighbours.Add(v3, 2);
 
             v5.m_neighbours.Add(v7, 6);
 
@@ -136,11 +140,50 @@ namespace Simple
             m_vertices.Add(v6);
             m_vertices.Add(v7);
             m_vertices.Add(v1);
+
+            Caculate(v1);
         }
 
-        public void Caculate()
+        public void Caculate(WeightedVertex origin)
         {
+            float INFINITY = float.MaxValue;
+            for (int i = 0; i < m_vertices.Count; ++i)
+            {
+                m_vertices[i].m_dist = INFINITY;
+                m_vertices[i].m_known = false;
+            }
+            origin.m_dist = 0;
+            WeightedVertex vert = null;
+            for (; ; )
+            {
+                vert = GetMinDistVert();
+                if (vert == null)
+                    break;
+                vert.m_known = true;
+                foreach(var pair in vert.m_neighbours)
+                {
+                    if(!pair.Key.m_known && pair.Value + vert.m_dist < pair.Key.m_dist)
+                    {
+                        pair.Key.m_dist = pair.Value + vert.m_dist;
+                        pair.Key.m_path = vert;
+                    }
+                }
+            }
+        }
 
+        private WeightedVertex GetMinDistVert()
+        {
+            WeightedVertex vert = null;
+            float min_dist = float.MaxValue;
+            for (int i = 0; i < m_vertices.Count; ++i)
+            {
+               if(!m_vertices[i].m_known && min_dist > m_vertices[i].m_dist)
+               {
+                   vert = m_vertices[i];
+                   min_dist = vert.m_dist;
+               }
+            }
+            return vert;
         }
     }
 }
