@@ -48,6 +48,7 @@
     <Compile Include="Common\Sort.cs" />
     <Compile Include="CRC\CRC.cs" />
     <Compile Include="CRC\CRC32.cs" />
+    <Compile Include="Graph\Graph.cs" />
     <Compile Include="Hash\HashTable.cs" />
     <Compile Include="Helper\MathHelper.cs" />
     <Compile Include="Program.cs" />
